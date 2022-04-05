@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PVM skaičiuoklė</title>
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap">
+    <link rel="stylesheet" th:href="@{/styles/main.css}">
+</head>
+
+<body>
+<main>
+    <div class="container container-xl">
+        <nav class="header">
+            <div class="logo">
+                <img th:src="@{/images/logo.svg}" alt="Logo">
+            </div>
+            <div class="menu">
+                <a class="active" href="/">Pradžia</a>
+                <a href="https://github.com/Digital-512/java-spring-darbai">Github</a>
+            </div>
+        </nav>
+        <div class="content">
+            <h4 class="title">PVM skaičiuoklė</h4>
+            <p class="subtitle">Įrašykite prekės kainą (su PVM) ir prekių kiekį į žemiau esančią formą</p>
+            <form class="stats-container" method="post" th:action="@{/result}">
+                <div class="form-container full-width">
+                    <div class="col">
+                        <label for="prekes-kaina">Prekės kaina (su PVM)</label>
+                        <input type="text" id="prekes-kaina" name="kaina" placeholder="12.99" required>
+                        <label for="pvm-tarifas">PVM tarifas</label>
+                        <select name="tarifas" id="pvm-tarifas" required>
+                            <option value="21">21%</option>
+                            <option value="9">9%</option>
+                            <option value="5">5%</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="prekiu-kiekis">Prekių kiekis</label>
+                        <input type="number" id="prekiu-kiekis" name="kiekis" placeholder="1" required>
+                    </div>
+                </div>
+                <div class="button-area">
+                    <button class="button submit-text">Skaičiuoti</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+
+</html>

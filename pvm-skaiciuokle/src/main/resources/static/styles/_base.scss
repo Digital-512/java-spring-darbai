@@ -1,0 +1,50 @@
+// # Base styles
+
+$selection-color: #b3d4fc;
+
+$text-color-default: #222;
+$bg-color-default: #f6f7f9;
+
+$font-family-base: "Roboto", "Helvetica", "Arial", sans-serif;
+$font-size-base: 1rem;
+$font-weight-base: 400;
+$line-height-base: 1.5;
+
+// Change from `box-sizing: content-box` so that `width` is not affected by `padding` or `border`.
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+// Selection
+
+::selection {
+  background: $selection-color;
+  text-shadow: none;
+}
+
+// 1. Change the default tap highlight to be completely transparent on mobile.
+// 2. Then set touch-action to avoid touch delay on mobile IE.
+
+html {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  scroll-behavior: smooth;
+}
+
+// 1. Remove the margin in all browsers.
+// 2. Set default text color.
+// 3. As a best practice, apply a default `background-color`.
+// 4. Set default font styles.
+
+body {
+  margin: 0;
+  color: $text-color-default;
+  background-color: $bg-color-default;
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-base;
+  line-height: $line-height-base;
+}
