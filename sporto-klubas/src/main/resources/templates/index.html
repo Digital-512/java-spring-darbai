@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, content, page)">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Sporto klubo sistema">
+
+    <title th:replace="${title}">Sporto klubo sistema</title>
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500"
+          rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css" rel="stylesheet"/>
+
+    <!-- PLUGINS CSS STYLE -->
+    <link th:href="@{/assets/plugins/nprogress/nprogress.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/plugins/daterangepicker/daterangepicker.css}" rel="stylesheet"/>
+
+    <!-- SLEEK CSS -->
+    <link id="sleek-css" rel="stylesheet" th:href="@{/assets/css/sleek.css}"/>
+
+    <!-- FAVICON -->
+    <link th:href="@{/assets/img/favicon.png}" rel="shortcut icon"/>
+
+    <script th:src="@{/assets/plugins/nprogress/nprogress.js}"></script>
+</head>
+
+<body class="header-fixed sidebar-fixed sidebar-dark header-light" id="body">
+
+<script>
+    NProgress.configure({showSpinner: false});
+    NProgress.start();
+</script>
+
+<div class="wrapper">
+    <aside class="left-sidebar bg-sidebar">
+        <div id="sidebar" class="sidebar">
+            <!-- Aplication Brand -->
+            <div class="app-brand">
+                <a th:href="@{/}" title="Sporto klubas">
+                    <svg
+                            class="brand-icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            preserveAspectRatio="xMidYMid"
+                            width="30"
+                            height="33"
+                            viewBox="0 0 30 33"
+                    >
+                        <g fill="none" fill-rule="evenodd">
+                            <path
+                                    class="logo-fill-blue"
+                                    fill="#7DBCFF"
+                                    d="M0 4v25l8 4V0zM22 4v25l8 4V0z"
+                            />
+                            <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z"/>
+                        </g>
+                    </svg>
+                    <span class="brand-name text-truncate">Sporto klubas</span>
+                </a>
+            </div>
+            <!-- begin sidebar scrollbar -->
+            <div class="sidebar-scrollbar">
+                <!-- sidebar menu -->
+                <ul class="nav sidebar-inner" id="sidebar-menu">
+                    <li th:attr="class=${page == 'home' ? 'active' : ''}">
+                        <a class="sidenav-item-link" th:href="@{/}">
+                            <i class="mdi mdi-home"></i>
+                            <span class="nav-text">Pagrindinis</span>
+                        </a>
+                    </li>
+                    <li th:attr="class=${page == 'clients' ? 'active' : ''}">
+                        <a class="sidenav-item-link" th:href="@{/clients/}">
+                            <i class="mdi mdi-account-multiple"></i>
+                            <span class="nav-text">Klientai</span>
+                        </a>
+                    </li>
+                    <li th:attr="class=${page == 'workouts' ? 'active' : ''}">
+                        <a class="sidenav-item-link" th:href="@{/workouts/}">
+                            <i class="mdi mdi-basketball"></i>
+                            <span class="nav-text">Treniruotės</span>
+                        </a>
+                    </li>
+                    <li th:attr="class=${page == 'registrations' ? 'active' : ''}">
+                        <a class="sidenav-item-link" th:href="@{/registrations/}">
+                            <i class="mdi mdi-briefcase-account"></i>
+                            <span class="nav-text">Registracijos</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </aside>
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header class="main-header " id="header">
+            <nav class="navbar navbar-static-top navbar-expand-lg">
+                <!-- Sidebar toggle button -->
+                <button id="sidebar-toggler" class="sidebar-toggle">
+                    <span class="sr-only">Perjungti navigaciją</span>
+                </button>
+                <div style="flex-grow: 1;padding: 0 2rem;font-size: 1.25rem;" th:text="${page}"></div>
+                <div class="navbar-right ">
+                    <ul class="nav navbar-nav">
+                        <!-- User Account -->
+                        <li class="dropdown user-menu">
+                            <button href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+                                <img th:src="@{/assets/img/user/user.png}" class="user-image" alt="User Image"/>
+                                <span class="d-none d-lg-inline-block">Administratorius</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <!-- User image -->
+                                <li class="dropdown-header">
+                                    <img th:src="@{/assets/img/user/user.png}" class="img-circle" alt="User Image"/>
+                                    <div class="d-inline-block">
+                                        Administratorius <small class="pt-1">elpastas@example.com</small>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="mdi mdi-account"></i> Mano paskyra</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="mdi mdi-cog"></i> Nustatymai</a>
+                                </li>
+                                <li class="dropdown-footer">
+                                    <a href="#"><i class="mdi mdi-logout"></i> Atsijungti</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Content -->
+        <div class="content-wrapper" th:insert="${content}"></div>
+        <!-- Footer -->
+        <footer class="footer mt-auto">
+            <div class="copyright bg-white">
+                <p>Sporto klubo sistema</p>
+            </div>
+        </footer>
+    </div>
+</div>
+
+<script th:src="@{/assets/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/assets/plugins/slimscrollbar/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/assets/plugins/daterangepicker/moment.min.js}"></script>
+<script th:src="@{/assets/plugins/daterangepicker/daterangepicker.js}"></script>
+
+<script>
+    $(document).ready(function () {
+        const $dateRange = $('input[name="dateRange"]');
+        $dateRange.daterangepicker({
+            autoUpdateInput: false,
+            singleDatePicker: true,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
+        $dateRange.on('apply.daterangepicker', function (ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY'));
+        });
+        $dateRange.on('cancel.daterangepicker', function () {
+            $(this).val('');
+        });
+    });
+</script>
+
+<script th:src="@{/assets/js/sleek.bundle.js}"></script>
+
+</body>
+
+</html>

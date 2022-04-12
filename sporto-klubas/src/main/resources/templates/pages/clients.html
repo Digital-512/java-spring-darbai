@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{index :: layout(~{::title}, ~{::.content}, ${'clients'})}">
+
+<head>
+    <title>Sporto klubo sistema - Klientai</title>
+</head>
+
+<body>
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <!-- Clients Table -->
+            <div class="card card-table-border-none" id="clients-table">
+                <div class="card-header justify-content-between">
+                    <h2>Sporto klubo klientai</h2>
+                    <a class="btn btn-primary btn-pill" id="add-client" th:href="@{/clients/add}" role="button"
+                       style="margin: -1rem 0;">
+                        <i class="mdi mdi-plus"></i> Pridėti klientą
+                    </a>
+                </div>
+                <div class="card-body pt-0 pb-5">
+                    <table class="table card-table table-responsive table-responsive-large" style="width:100%"
+                           th:if="${clients.size() != 0}">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Klientas</th>
+                            <th class="d-none d-lg-table-cell">El. paštas</th>
+                            <th class="d-none d-lg-table-cell">Telefonas</th>
+                            <th class="d-none d-lg-table-cell">Registracijos</th>
+                            <th>Būsena</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="client: ${clients}">
+                            <td th:text="${client.getId()}"></td>
+                            <td>
+                                <a class="text-dark" th:href="@{/clients/edit/{id}(id=${client.getId()})}"
+                                   th:text="${client.getName() + ' ' + client.getSurname()}"></a>
+                            </td>
+                            <td class="d-none d-lg-table-cell" th:text="${client.getEmail()}"></td>
+                            <td class="d-none d-lg-table-cell" th:text="${client.getPhone()}"></td>
+                            <td class="d-none d-lg-table-cell" th:text="${client.getRegistrationsCount()}"></td>
+                            <td>
+                                <span th:attr="class=${'badge badge-' + (client.getStatus() == 1 ? 'success' : 'warning')}"
+                                      th:text="${client.getNamedStatus()}"></span>
+                            </td>
+                            <td class="text-right">
+                                <a style="color: white !important;"
+                                   th:href="@{/clients/edit/{id}(id=${client.getId()})}" class="badge badge-primary">
+                                    <i class="mdi mdi-pencil"></i> Redaguoti
+                                </a>
+                                <a style="color: white !important;"
+                                   th:href="@{/clients/delete/{id}(id=${client.getId()})}" class="badge badge-danger">
+                                    <i class="mdi mdi-close-circle-outline"></i> Ištrinti
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="alert alert-primary" role="alert" style="margin-top: 3.12rem;"
+                         th:if="${clients.size() == 0}">
+                        Kol kas nėra pridėta jokių klientų. Spauskite mygtuką
+                        <a th:href="@{/clients/add}">Pridėti klientą</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

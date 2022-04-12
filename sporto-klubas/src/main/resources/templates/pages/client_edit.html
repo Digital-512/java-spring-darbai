@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{index :: layout(~{::title}, ~{::.content}, ${'clients'})}">
+
+<head>
+    <title>Sporto klubo sistema - Redaguoti klientą</title>
+</head>
+
+<body>
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <!-- Edit client -->
+            <div class="card card-table-border-none">
+                <div class="card-header justify-content-between">
+                    <h2>Redaguoti klientą</h2>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/clients/edit/{id}(id=${client.getId()})}" method="post" th:object="${client}">
+                        <input type="hidden" name="id" th:value="*{getId()}">
+                        <div class="row mb-2">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="first-name">Vardas</label>
+                                    <input type="text" class="form-control" id="first-name" name="name"
+                                           th:value="*{getName()}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="last-name">Pavardė</label>
+                                    <input type="text" class="form-control" id="last-name" name="surname"
+                                           th:value="*{getSurname()}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="email">El. pašto adresas</label>
+                            <input type="email" class="form-control" id="email" name="email" th:value="*{getEmail()}">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="phone">Telefono numeris</label>
+                            <input type="text" class="form-control" id="phone" name="phone" th:value="*{getPhone()}">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="user-status">Kliento būsena</label>
+                            <select class="form-control" id="user-status" name="status">
+                                <option th:attrappend="selected=*{getStatus() == 1} ? 'selected'" value="1">Aktyvus
+                                </option>
+                                <option th:attrappend="selected=*{getStatus() == 2} ? 'selected'" value="2">Neaktyvus
+                                </option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-end mt-5">
+                            <button type="submit" class="btn btn-primary mb-2 btn-pill">Išsaugoti klientą</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

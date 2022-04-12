@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{index :: layout(~{::title}, ~{::.content}, ${'workouts'})}">
+
+<head>
+    <title>Sporto klubo sistema - Pridėti treniruotę</title>
+</head>
+
+<body>
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <!-- Add workout -->
+            <div class="card card-table-border-none">
+                <div class="card-header justify-content-between">
+                    <h2>Pridėti naują treniruotę</h2>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/workouts/add}" method="post">
+                        <div class="form-group mb-4">
+                            <label for="name">Pavadinimas</label>
+                            <input type="text" class="form-control" id="name" name="name">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="date">Data</label>
+                            <input type="datetime-local" class="form-control" id="date" name="date">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="places">Vietos</label>
+                            <input type="text" class="form-control" id="places" name="places">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="location">Adresas</label>
+                            <input type="text" class="form-control" id="location" name="location">
+                        </div>
+                        <div class="d-flex justify-content-end mt-5">
+                            <button type="submit" class="btn btn-primary mb-2 btn-pill">Išsaugoti treniruotę</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
