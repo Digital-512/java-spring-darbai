@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{index :: layout(~{::title}, ~{::.content}, ${'workouts'})}">
+
+<head>
+    <title>Sporto klubo sistema - Treniruotės</title>
+</head>
+
+<body>
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <!-- Workouts Table -->
+            <div class="card card-table-border-none" id="clients-table">
+                <div class="card-header justify-content-between">
+                    <h2>Treniruočių sąrašas</h2>
+                    <a class="btn btn-primary btn-pill" id="add-client" th:href="@{/workouts/add}" role="button"
+                       style="margin: -1rem 0;">
+                        <i class="mdi mdi-plus"></i> Pridėti treniruotę
+                    </a>
+                </div>
+                <div class="card-body pt-0 pb-5">
+                    <table class="table card-table table-responsive table-responsive-large" style="width:100%"
+                           th:if="${workouts.size() != 0}">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Pavadinimas</th>
+                            <th class="d-none d-lg-table-cell">Data</th>
+                            <th class="d-none d-lg-table-cell">Vietų skaičius</th>
+                            <th class="d-none d-lg-table-cell">Adresas</th>
+                            <th class="d-none d-lg-table-cell">Registracijos</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="workout: ${workouts}">
+                            <td th:text="${workout.getId()}"></td>
+                            <td>
+                                <a class="text-dark" th:href="@{/workouts/edit/{id}(id=${workout.getId()})}"
+                                   th:text="${workout.getName()}"></a>
+                            </td>
+                            <td class="d-none d-lg-table-cell" th:text="${workout.getDate().replace('T',' ')}"></td>
+                            <td class="d-none d-lg-table-cell" th:text="${workout.getPlaces()}"></td>
+                            <td class="d-none d-lg-table-cell" th:text="${workout.getLocation()}"></td>
+                            <td class="d-none d-lg-table-cell" th:text="${workout.getRegistrationsCount()}"></td>
+                            <td class="text-right">
+                                <a style="color: white !important;"
+                                   th:href="@{/workouts/edit/{id}(id=${workout.getId()})}" class="badge badge-primary">
+                                    <i class="mdi mdi-pencil"></i> Redaguoti
+                                </a>
+                                <a style="color: white !important;"
+                                   th:href="@{/workouts/delete/{id}(id=${workout.getId()})}" class="badge badge-danger">
+                                    <i class="mdi mdi-close-circle-outline"></i> Ištrinti
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="alert alert-primary" role="alert" style="margin-top: 3.12rem;"
+                         th:if="${workouts.size() == 0}">
+                        Kol kas nėra pridėta jokių treniruočių. Spauskite mygtuką
+                        <a th:href="@{/workouts/add}">Pridėti treniruotę</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

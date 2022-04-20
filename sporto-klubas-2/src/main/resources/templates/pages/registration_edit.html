@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{index :: layout(~{::title}, ~{::.content}, ${'registrations'})}">
+
+<head>
+    <title>Sporto klubo sistema - Redaguoti registraciją</title>
+</head>
+
+<body>
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <!-- Edit registration -->
+            <div class="card card-table-border-none">
+                <div class="card-header justify-content-between">
+                    <h2>Redaguoti registraciją</h2>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/registrations/edit/{id}(id=${registration.getId()})}" method="post"
+                          th:object="${registration}">
+                        <input type="hidden" name="id" th:value="*{getId()}">
+                        <div class="form-group mb-4">
+                            <label for="clientId">Klientas</label>
+                            <select class="form-control" id="clientId" name="clientId">
+                                <option th:each="client: ${clients}"
+                                        th:text="${client.getName() + ' ' + client.getSurname()}"
+                                        th:value="${client.getId()}"
+                                        th:attrappend="selected=${client.getId()} == *{getClient().getId()} ? 'selected'"></option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="workoutId">Treniruotė</label>
+                            <select class="form-control" id="workoutId" name="workoutId">
+                                <option th:each="workout: ${workouts}"
+                                        th:text="${workout.getName()}"
+                                        th:value="${workout.getId()}"
+                                        th:attrappend="selected=${workout.getId()} == *{getWorkout().getId()} ? 'selected'"></option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="registrationDate">Registracijos data</label>
+                            <input type="datetime-local" class="form-control" id="registrationDate"
+                                   name="registrationDate" th:value="*{getRegistrationDate()}">
+                        </div>
+                        <div class="d-flex justify-content-end mt-5">
+                            <button type="submit" class="btn btn-primary mb-2 btn-pill">Išsaugoti registraciją</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>
