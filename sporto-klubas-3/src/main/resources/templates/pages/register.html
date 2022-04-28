@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{auth :: layout(~{::title}, ~{::.container}, ${'register'})}">
+
+<head>
+    <title>Sporto klubo sistema - Registracija</title>
+</head>
+
+<body>
+
+<div class="container d-flex align-items-center justify-content-center" style="margin: 3rem auto;">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-10">
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <div class="app-brand">
+                        <a th:href="@{/}">
+                            <svg class="brand-icon" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"
+                                 width="30"
+                                 height="33" viewBox="0 0 30 33">
+                                <g fill="none" fill-rule="evenodd">
+                                    <path class="logo-fill-blue" fill="#7DBCFF" d="M0 4v25l8 4V0zM22 4v25l8 4V0z"/>
+                                    <path class="logo-fill-white" fill="#FFF" d="M11 4v25l8 4V0z"/>
+                                </g>
+                            </svg>
+                            <span class="brand-name">Sporto klubas</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body p-5">
+                    <h4 class="text-dark mb-5">Registracija</h4>
+                    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.*')}">
+                        <div>❌ Nepavyko užsiregistruoti. Patikrinkite duomenis.</div>
+                    </div>
+                    <form th:action="@{/register}" method="post" th:object="${client}">
+                        <div class="row">
+                            <div class="form-group col-md-12 mb-4">
+                                <label for="first-name">Vardas <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control input-lg" name="name" id="first-name"
+                                       th:value="*{getName()}"
+                                       th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}">
+                                <div class="invalid-feedback" th:each="error: ${#fields.errors('name')}"
+                                     th:text="${error}"></div>
+                            </div>
+                            <div class="form-group col-md-12 mb-4">
+                                <label for="last-name">Pavardė <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control input-lg" name="surname" id="last-name"
+                                       th:value="*{getSurname()}"
+                                       th:classappend="${#fields.hasErrors('surname') ? 'is-invalid' : ''}">
+                                <div class="invalid-feedback" th:each="error: ${#fields.errors('surname')}"
+                                     th:text="${error}"></div>
+                            </div>
+                            <div class="form-group col-md-12 mb-4">
+                                <label for="username">Vartotojo vardas <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control input-lg" name="username" id="username"
+                                       th:value="*{getUsername()}"
+                                       th:classappend="${#fields.hasErrors('username') ? 'is-invalid' : ''}">
+                                <div class="invalid-feedback" th:each="error: ${#fields.errors('username')}"
+                                     th:text="${error}"></div>
+                            </div>
+                            <div class="form-group col-md-12 mb-4">
+                                <label for="email">El. pašto adresas <span style="color: red;">*</span></label>
+                                <input type="email" class="form-control input-lg" name="email" id="email"
+                                       th:value="*{getEmail()}"
+                                       th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}">
+                                <div class="invalid-feedback" th:each="error: ${#fields.errors('email')}"
+                                     th:text="${error}"></div>
+                            </div>
+                            <div class="form-group col-md-12 mb-4">
+                                <label for="phone">Telefono numeris <span style="color: red;">*</span></label>
+                                <input type="text" class="form-control input-lg" name="phone" id="phone"
+                                       th:value="*{getPhone()}"
+                                       th:classappend="${#fields.hasErrors('phone') ? 'is-invalid' : ''}">
+                                <div class="invalid-feedback" th:each="error: ${#fields.errors('phone')}"
+                                     th:text="${error}"></div>
+                            </div>
+                            <div class="form-group col-md-12 ">
+                                <label for="password">Slaptažodis <span style="color: red;">*</span></label>
+                                <input type="password" class="form-control input-lg" name="password" id="password"
+                                       th:value="*{getPassword()}"
+                                       th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}">
+                                <div class="invalid-feedback" th:each="error: ${#fields.errors('password')}"
+                                     th:text="${error}"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-lg btn-primary btn-block mb-4">Užsiregistruoti
+                                </button>
+                                <p>Jau turite paskyrą?
+                                    <a class="text-blue" th:href="@{/login}">Prisijungti</a>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

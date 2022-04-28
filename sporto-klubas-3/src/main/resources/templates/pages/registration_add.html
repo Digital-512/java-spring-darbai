@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{index :: layout(~{::title}, ~{::.content}, ${'registrations'})}">
+
+<head>
+    <title>Sporto klubo sistema - Pridėti registraciją</title>
+</head>
+
+<body>
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <!-- Add registration -->
+            <div class="card card-table-border-none">
+                <div class="card-header justify-content-between">
+                    <h2>Pridėti naują registraciją</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger" role="alert" th:if="${clients.size() == 0}">
+                        Negalima pridėti registracijų, kai nėra klientų.
+                        <a th:href="@{/clients/add}">Pridėti klientą</a>.
+                    </div>
+                    <div class="alert alert-danger" role="alert" th:if="${workouts.size() == 0}">
+                        Negalima pridėti registracijų, kai nėra treniruočių.
+                        <a th:href="@{/workouts/add}">Pridėti treniruotę</a>.
+                    </div>
+                    <div class="alert alert-danger" role="alert" th:if="${error}">
+                        <div th:text="${'❌ ' + error}"></div>
+                    </div>
+                    <form th:action="@{/registrations/add}" method="post"
+                          th:if="${clients.size() != 0 && workouts.size() != 0}">
+                        <div class="form-group mb-4">
+                            <label for="clientId">Klientas</label>
+                            <select class="form-control" id="clientId" name="clientId"
+                                    th:readonly="${!#authentication.getPrincipal().hasAuthority('admin')}">
+                                <option th:each="client: ${clients}"
+                                        th:text="${client.getName() + ' ' + client.getSurname()}"
+                                        th:value="${client.getId()}" selected="selected"></option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="workoutId">Treniruotė</label>
+                            <select class="form-control" id="workoutId" name="workoutId">
+                                <option th:each="workout: ${workouts}"
+                                        th:text="${workout.getName()}"
+                                        th:value="${workout.getId()}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="registrationDate">Registracijos data</label>
+                            <input type="datetime-local" class="form-control" id="registrationDate"
+                                   name="registrationDate">
+                        </div>
+                        <div class="d-flex justify-content-end mt-5">
+                            <button type="submit" class="btn btn-primary mb-2 btn-pill">Išsaugoti registraciją</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Nustatyti dabartini laika.
+        document.getElementById("registrationDate").value = new Date().toISOString().slice(0, 16);
+    </script>
+</div>
+
+</body>
+
+</html>

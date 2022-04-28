@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{index :: layout(~{::title}, ~{::.content}, ${'home'})}">
+
+<head>
+    <title>Sporto klubo sistema - Pagrindinis</title>
+</head>
+
+<body>
+
+<div class="content">
+    <!-- Admin check -->
+    <div class="alert alert-danger" role="alert" th:if="${!#authentication.getPrincipal().hasAuthority('admin')}">
+        Jūs nesate administratorius, todėl pasiekiamos galimybės yra apribotos! Nustatykite type=`admin` duomenų bazėje.
+    </div>
+    <!-- Top Statistics -->
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-xl-3" th:if="${clientsCount != null}">
+            <div class="media widget-media p-4 bg-white border">
+                <div class="icon rounded-circle mr-4 bg-primary">
+                    <i class="mdi mdi-account-outline text-white"></i>
+                </div>
+                <div class="media-body align-self-center">
+                    <h4 class="text-primary mb-2" th:text="${clientsCount}"></h4>
+                    <p>Klientų</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-3">
+            <div class="media widget-media p-4 bg-white border">
+                <div class="icon rounded-circle bg-warning mr-4">
+                    <i class="mdi mdi-crown-circle-outline text-white"></i>
+                </div>
+                <div class="media-body align-self-center">
+                    <h4 class="text-primary mb-2" th:text="${workoutsCount}"></h4>
+                    <p>Treniruočių</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-3" th:if="${registrationsCount != null}">
+            <div class="media widget-media p-4 bg-white border">
+                <div class="icon rounded-circle mr-4 bg-danger">
+                    <i class="mdi mdi-badge-account-horizontal-outline text-white"></i>
+                </div>
+                <div class="media-body align-self-center">
+                    <h4 class="text-primary mb-2" th:text="${registrationsCount}"></h4>
+                    <p>Registracijų</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-3">
+            <div class="media widget-media p-4 bg-white border">
+                <div class="icon rounded-circle mr-4 bg-danger">
+                    <i class="mdi mdi-badge-account-horizontal-outline text-white"></i>
+                </div>
+                <div class="media-body align-self-center">
+                    <h4 class="text-primary mb-2" th:text="${myRegistrationsCount}"></h4>
+                    <p>Mano registracijos</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xl-3" th:if="${#authentication.getPrincipal().hasAuthority('admin')}">
+            <div class="media widget-media p-4 bg-white border">
+                <div class="icon bg-success rounded-circle mr-4">
+                    <i class="mdi mdi-diamond text-white"></i>
+                </div>
+                <div class="media-body align-self-center">
+                    <h4 class="text-primary mb-2">9,503 &euro;</h4>
+                    <p>Metų pelnas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

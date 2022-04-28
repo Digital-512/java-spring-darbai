@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{index :: layout(~{::title}, ~{::.content}, ${'workouts'})}">
+
+<head>
+    <title>Sporto klubo sistema - Redaguoti treniruotę</title>
+</head>
+
+<body>
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <!-- Edit workout -->
+            <div class="card card-table-border-none">
+                <div class="card-header justify-content-between">
+                    <h2>Redaguoti treniruotės informaciją</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('workout.*')}">
+                        <div th:each="error: ${#fields.errors('workout.*')}" th:text="${'❌ ' + error}"></div>
+                    </div>
+                    <form th:action="@{/workouts/edit/{id}(id=${workout.getId()})}" method="post"
+                          th:object="${workout}">
+                        <input type="hidden" name="id" th:value="*{getId()}">
+                        <div class="form-group mb-4">
+                            <label for="name">Pavadinimas</label>
+                            <input type="text" class="form-control" id="name" name="name" th:value="*{getName()}"
+                                   th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}">
+                            <div class="invalid-feedback" th:each="error: ${#fields.errors('name')}"
+                                 th:text="${error}"></div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="date">Data</label>
+                            <input type="datetime-local" class="form-control" id="date" name="date"
+                                   th:value="*{getDate()}"
+                                   th:classappend="${#fields.hasErrors('date') ? 'is-invalid' : ''}">
+                            <div class="invalid-feedback" th:each="error: ${#fields.errors('date')}"
+                                 th:text="${error}"></div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="places">Vietų skaičius</label>
+                            <input type="number" class="form-control" id="places" name="places"
+                                   th:value="*{getPlaces()}"
+                                   th:classappend="${#fields.hasErrors('places') ? 'is-invalid' : ''}">
+                            <div class="invalid-feedback" th:each="error: ${#fields.errors('places')}"
+                                 th:text="${error}"></div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="location">Adresas</label>
+                            <input type="text" class="form-control" id="location" name="location"
+                                   th:value="*{getLocation()}"
+                                   th:classappend="${#fields.hasErrors('location') ? 'is-invalid' : ''}">
+                            <div class="invalid-feedback" th:each="error: ${#fields.errors('location')}"
+                                 th:text="${error}"></div>
+                        </div>
+                        <div class="d-flex justify-content-end mt-5">
+                            <button type="submit" class="btn btn-primary mb-2 btn-pill">Išsaugoti treniruotę</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

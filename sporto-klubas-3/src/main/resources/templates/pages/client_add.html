@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{index :: layout(~{::title}, ~{::.content}, ${'clients'})}">
+
+<head>
+    <title>Sporto klubo sistema - Pridėti klientą</title>
+</head>
+
+<body>
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <!-- Add client -->
+            <div class="card card-table-border-none">
+                <div class="card-header justify-content-between">
+                    <h2>Pridėti naują klientą</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-danger" role="alert" th:if="${#fields.hasErrors('client.*')}">
+                        <div th:each="error: ${#fields.errors('client.*')}" th:text="${'❌ ' + error}"></div>
+                    </div>
+                    <form th:action="@{/clients/add}" method="post" th:object="${client}">
+                        <div class="row mb-2">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="first-name">Vardas</label>
+                                    <input type="text" class="form-control" id="first-name" name="name"
+                                           th:value="*{getName()}"
+                                           th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}">
+                                    <div class="invalid-feedback" th:each="error: ${#fields.errors('name')}"
+                                         th:text="${error}"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="last-name">Pavardė</label>
+                                    <input type="text" class="form-control" id="last-name" name="surname"
+                                           th:value="*{getSurname()}"
+                                           th:classappend="${#fields.hasErrors('surname') ? 'is-invalid' : ''}">
+                                    <div class="invalid-feedback" th:each="error: ${#fields.errors('surname')}"
+                                         th:text="${error}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="username">Vartotojo vardas</label>
+                                    <input type="text" class="form-control" id="username" name="username"
+                                           th:value="*{getUsername()}"
+                                           th:classappend="${#fields.hasErrors('username') ? 'is-invalid' : ''}">
+                                    <div class="invalid-feedback" th:each="error: ${#fields.errors('username')}"
+                                         th:text="${error}"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="password">Slaptažodis</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="password" name="password"
+                                               autocomplete="off"
+                                               th:value="*{getPassword()}"
+                                               th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button" id="button-gen-password">
+                                                Generuoti
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback" th:each="error: ${#fields.errors('password')}"
+                                         th:text="${error}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="email">El. pašto adresas</label>
+                            <input type="email" class="form-control" id="email" name="email" th:value="*{getEmail()}"
+                                   th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}">
+                            <div class="invalid-feedback" th:each="error: ${#fields.errors('email')}"
+                                 th:text="${error}"></div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="phone">Telefono numeris</label>
+                            <input type="text" class="form-control" id="phone" name="phone" th:value="*{getPhone()}"
+                                   th:classappend="${#fields.hasErrors('phone') ? 'is-invalid' : ''}">
+                            <div class="invalid-feedback" th:each="error: ${#fields.errors('phone')}"
+                                 th:text="${error}"></div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="user-status">Kliento būsena</label>
+                            <select class="form-control" id="user-status" name="status"
+                                    th:classappend="${#fields.hasErrors('status') ? 'is-invalid' : ''}">
+                                <option th:attrappend="selected=*{getStatus() == 1} ? 'selected'" value="1">Aktyvus
+                                </option>
+                                <option th:attrappend="selected=*{getStatus() == 2} ? 'selected'" value="2">Neaktyvus
+                                </option>
+                            </select>
+                            <div class="invalid-feedback" th:each="error: ${#fields.errors('status')}"
+                                 th:text="${error}"></div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="type">Kliento rolė</label>
+                            <select class="form-control" id="type" name="type"
+                                    th:classappend="${#fields.hasErrors('type') ? 'is-invalid' : ''}">
+                                <option th:attrappend="selected=*{getType() == 'user'} ? 'selected'" value="user">
+                                    Vartotojas
+                                </option>
+                                <option th:attrappend="selected=*{getType() == 'admin'} ? 'selected'" value="admin">
+                                    Administratorius
+                                </option>
+                            </select>
+                            <div class="invalid-feedback" th:each="error: ${#fields.errors('type')}"
+                                 th:text="${error}"></div>
+                        </div>
+                        <div class="d-flex justify-content-end mt-5">
+                            <button type="submit" class="btn btn-primary mb-2 btn-pill">Išsaugoti klientą</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // https://dev.to/code_mystery/random-password-generator-using-javascript-6a
+        $("#button-gen-password").click(function () {
+            const chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const length = 12;
+            let password = "";
+            for (let i = 0; i <= length; i++) {
+                const randomNumber = Math.floor(Math.random() * chars.length);
+                password += chars.substring(randomNumber, randomNumber + 1);
+            }
+            $("#password").val(password);
+        })
+    </script>
+</div>
+
+</body>
+
+</html>

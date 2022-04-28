@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, content, page)">
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Sporto klubo sistema">
+
+    <title th:replace="${title}">Sporto klubo sistema</title>
+
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500"
+          rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css" rel="stylesheet"/>
+
+    <!-- PLUGINS CSS STYLE -->
+    <link th:href="@{/assets/plugins/nprogress/nprogress.css}" rel="stylesheet"/>
+    <link th:href="@{/assets/plugins/daterangepicker/daterangepicker.css}" rel="stylesheet"/>
+
+    <!-- SLEEK CSS -->
+    <link id="sleek-css" rel="stylesheet" th:href="@{/assets/css/sleek.css}"/>
+
+    <!-- FAVICON -->
+    <link th:href="@{/assets/img/favicon.png}" rel="shortcut icon"/>
+
+    <script th:src="@{/assets/plugins/nprogress/nprogress.js}"></script>
+</head>
+
+<body id="body">
+
+<script>
+    NProgress.configure({showSpinner: false});
+    NProgress.start();
+</script>
+
+<script th:src="@{/assets/plugins/jquery/jquery.min.js}"></script>
+
+<div th:replace="${content}"></div>
+
+<script th:src="@{/assets/plugins/slimscrollbar/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/assets/plugins/daterangepicker/moment.min.js}"></script>
+<script th:src="@{/assets/plugins/daterangepicker/daterangepicker.js}"></script>
+<script th:src="@{/assets/plugins/sweetalert/sweetalert.min.js}"></script>
+
+<script th:src="@{/assets/js/sleek.bundle.js}"></script>
+
+</body>
+
+</html>
