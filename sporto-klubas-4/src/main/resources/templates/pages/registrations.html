@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{index :: layout(~{::title}, ~{::.content}, ${'registrations'})}">
+
+<head>
+    <title>Sporto klubo sistema - Registracijos</title>
+</head>
+
+<body>
+
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <!-- Registrations Table -->
+            <div class="card card-table-border-none" id="clients-table">
+                <div class="card-header justify-content-between">
+                    <h2>Registracijų sąrašas</h2>
+                    <a class="btn btn-primary btn-pill" id="add-client" th:href="@{/registrations/add}" role="button"
+                       style="margin: -1rem 0;">
+                        <i class="mdi mdi-plus"></i> Pridėti registraciją
+                    </a>
+                </div>
+                <div class="card-body pt-0 pb-5">
+                    <table class="table card-table table-responsive table-responsive-large" style="width:100%"
+                           th:if="${registrations.size() != 0}">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Klientas</th>
+                            <th class="d-none d-lg-table-cell">Treniruotė</th>
+                            <th class="d-none d-lg-table-cell">Registracijos data</th>
+                            <th class="d-none d-lg-table-cell">Vietų skaičius</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="registration: ${registrations}">
+                            <td th:text="${registration.getId()}"></td>
+                            <td>
+                                <a class="text-dark"
+                                   th:href="@{/clients/edit/{id}(id=${registration.getClient().getId()})}"
+                                   th:text="${registration.getClient().getName() + ' ' + registration.getClient().getSurname()}"></a>
+                            </td>
+                            <td class="d-none d-lg-table-cell" th:text="${registration.getWorkout().getName()}"></td>
+                            <td class="d-none d-lg-table-cell"
+                                th:text="${registration.getRegistrationDate().replace('T',' ')}"></td>
+                            <td class="d-none d-lg-table-cell" th:text="${registration.getWorkout().getPlaces()}"></td>
+                            <td class="text-right">
+                                <a style="color: white !important;"
+                                   th:href="@{/registrations/edit/{id}(id=${registration.getId()})}"
+                                   class="badge badge-primary">
+                                    <i class="mdi mdi-pencil"></i> Redaguoti
+                                </a>
+                                <a th:href="@{/registrations/}"
+                                   style="color: white !important;"
+                                   class="badge badge-danger delete"
+                                   th:data-registration="${registration.getId()}">
+                                    <i class="mdi mdi-close-circle-outline"></i> Ištrinti
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="alert alert-primary" role="alert" style="margin-top: 3.12rem;"
+                         th:if="${registrations.size() == 0}">
+                        Kol kas nėra pridėta jokių registracijų. Spauskite mygtuką
+                        <a th:href="@{/registrations/add}">Pridėti registraciją</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(".delete").click(function (event) {
+            event.preventDefault();
+            const $btn = $(this);
+            swal({
+                title: "Patvirtinti ištrynimą?",
+                text: "Ar tikrai norite ištrinti registraciją Nr. " + $btn.data("registration") + "?",
+                icon: "warning",
+                buttons: ["Ne", "Taip"],
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) document.location = "/registrations/delete/" + $btn.data("registration");
+                });
+        });
+    </script>
+</div>
+
+</body>
+
+</html>
